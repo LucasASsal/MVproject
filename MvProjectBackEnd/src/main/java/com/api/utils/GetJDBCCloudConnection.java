@@ -1,5 +1,6 @@
 package com.api.utils;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -7,12 +8,16 @@ import oracle.ucp.jdbc.PoolDataSource;
 import oracle.ucp.jdbc.PoolDataSourceFactory;
 
 public class GetJDBCCloudConnection {
-	  final static String DB_URL="jdbc:oracle:thin:@dbmvproject_medium?TNS_ADMIN=C:/Users/lucas.andre.salvino/Desktop/databaseKey";
+	  private static String DB_URL;
 	  final static String DB_USER = "admin";
 	  final static String DB_PASSWORD = "Abcdefgh123456";
 	  final static String CONN_FACTORY_CLASS_NAME="oracle.jdbc.pool.OracleDataSource";
 	  
 	public Connection getConnection() {
+		String basePath = new File("").getAbsolutePath();
+
+	    String pathToKey = new File("src/databaseKey").getAbsolutePath();
+	    DB_URL= "jdbc:oracle:thin:@dbmvproject_medium?TNS_ADMIN="+pathToKey;
 		PoolDataSource pds = PoolDataSourceFactory.getPoolDataSource();
 		  Connection conn = null;
 		try {
