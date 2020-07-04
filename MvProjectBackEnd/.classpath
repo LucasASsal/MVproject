@@ -13,9 +13,9 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-11.0.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
-			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -24,11 +24,11 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/ProjetoMV/pure-java-rest-api-master/lib/ojdbc8.jar"/>
-	<classpathentry kind="lib" path="C:/ProjetoMV/pure-java-rest-api-master/lib/oraclepki.jar"/>
-	<classpathentry kind="lib" path="C:/ProjetoMV/pure-java-rest-api-master/lib/osdt_cert.jar"/>
-	<classpathentry kind="lib" path="C:/ProjetoMV/pure-java-rest-api-master/lib/osdt_core.jar"/>
-	<classpathentry kind="lib" path="C:/ProjetoMV/pure-java-rest-api-master/lib/ucp.jar"/>
-	<classpathentry kind="lib" path="C:/ProjetoMV/pure-java-rest-api-master/lib/gson-2.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/ProjetoMV/MVproject/MvProjectBackEnd/lib/gson-2.6.2.jar"/>
+	<classpathentry kind="lib" path="C:/ProjetoMV/MVproject/MvProjectBackEnd/lib/ojdbc8.jar"/>
+	<classpathentry kind="lib" path="C:/ProjetoMV/MVproject/MvProjectBackEnd/lib/oraclepki.jar"/>
+	<classpathentry kind="lib" path="C:/ProjetoMV/MVproject/MvProjectBackEnd/lib/osdt_cert.jar"/>
+	<classpathentry kind="lib" path="C:/ProjetoMV/MVproject/MvProjectBackEnd/lib/osdt_core.jar"/>
+	<classpathentry kind="lib" path="C:/ProjetoMV/MVproject/MvProjectBackEnd/lib/ucp.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
