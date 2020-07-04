@@ -2,7 +2,7 @@
 link para video no youtube:
 https://youtu.be/ndcXzYw6ArI
 
-## montagem do ambiente
+## Montagem do ambiente
 
 ### 1. Baixar e configurar corretamente o java 11
 
