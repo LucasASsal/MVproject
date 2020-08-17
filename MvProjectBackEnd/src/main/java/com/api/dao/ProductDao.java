@@ -37,9 +37,10 @@ public class ProductDao {
     while (rs.next()) {
 
         int codigo = rs.getInt("codigo");
+        int categoria = rs.getInt("categoria");
         String descricao = rs.getString("descricao");
         int preco = rs.getInt("preco");
-        listProducts.add(new ProductEntity(codigo,descricao,preco));
+        listProducts.add(new ProductEntity(codigo,categoria, descricao,preco));
         
     }
     
@@ -67,19 +68,21 @@ public class ProductDao {
 		    ResultSet rs = (ResultSet) cs.getObject(2);
 		    
 		    int codigo = 0;
+		    int categoria = 0;
 		    String descricao = null;
 		    int preco = 0;
 		    
 		    while (rs.next()) {
 
 		        codigo = rs.getInt("codigo");
+		        categoria = rs.getInt("categoria");
 		        descricao = rs.getString("descricao");
 		        preco = rs.getInt("preco");
 		        
 		    }
 		    rs.close();
 		    cs.close();
-		    return new ProductEntity(codigo,descricao,preco);
+		    return new ProductEntity(codigo,categoria,descricao,preco);
 	} catch (SQLException e) {
 		
 		e.printStackTrace();
@@ -105,13 +108,14 @@ public class ProductDao {
 	  return false;
   }
   
-  public boolean updateProduct(int code, String descricao, int preco){
+  public boolean updateProduct(int code, int categoria,String descricao, int preco){
 	  try {
 		conn.setAutoCommit(false);
 
-	      CallableStatement cs = conn.prepareCall("call admin.update_product(?,?,?)");  
+	      CallableStatement cs = conn.prepareCall("call admin.update_product(?,?,?,?)");  
 	      
 	      cs.setInt("P_CODIGO", code);  
+	      cs.setInt("P_CATEGORIA", categoria);
 	      cs.setString("P_DESCRICAO", descricao); 
 	      cs.setInt("P_PRECO", preco);
 	      cs.execute();
@@ -125,13 +129,14 @@ public class ProductDao {
 	  return true;
   }
   
-  public boolean createNewProduct(int code, String descricao, int preco) {
+  public boolean createNewProduct(int code, int categoria, String descricao, int preco) {
 	  try {
 		conn.setAutoCommit(false);
 	    
-	    CallableStatement cs = conn.prepareCall("call admin.insert_product(?,?,?)");  
+	    CallableStatement cs = conn.prepareCall("call admin.insert_product(?,?,?,?)");  
 	    
 	    cs.setInt("P_CODIGO", code);  
+	    cs.setInt("P_CATEGORIA", categoria);
 	    cs.setString("P_DESCRICAO", descricao); 
 	    cs.setInt("P_PRECO", preco);
 	    cs.execute();
@@ -145,5 +150,49 @@ public class ProductDao {
     return true;
 	 
   }
+
+
+
+public boolean updateProductByCategory(int categoria, int aumentoPercentual) {
+	try {
+		conn.setAutoCommit(false);
+	    
+	    CallableStatement cs = conn.prepareCall("call admin.UPDATE_PRODUCT_PRICE_BY_CATEGORY(?,?)");  
+	     
+	    cs.setInt("P_CATEGORIA", categoria);
+	    
+	    cs.setInt("P_PRECO", aumentoPercentual);
+	    cs.execute();
+	    cs.close();
+	} catch (SQLException e) {
+		 
+		e.printStackTrace();
+	}
+      
+      
+    return true;
+}
+
+
+
+public boolean updateProductByPercentrange(int range1, int range2, int aumentoPercentual) {
+	try {
+		conn.setAutoCommit(false);
+	    
+	    CallableStatement cs = conn.prepareCall("call admin.UPDATE_PRODUCT_PRICE_BY_PERCENTRANGE(?,?,?)");  
+	     
+	    cs.setInt("P_RANGE1", range1);
+	    cs.setInt("P_RANGE2", range2);
+	    cs.setInt("P_PRECO", aumentoPercentual);
+	    cs.execute();
+	    cs.close();
+	} catch (SQLException e) {
+		 
+		e.printStackTrace();
+	}
+      
+      
+    return true;
+}
   
 }

@@ -2,14 +2,18 @@ package com.api.main;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+
+import com.api.controllers.ProductController;
 import com.api.services.ProductService;
+import com.api.services.ProductUpdateByCategoryService;
+import com.api.services.ProductUpdateByPercentrangeService;
 import com.sun.net.httpserver.HttpServer;
 
 
 class Application {
 
 	public static void main(String[] args){
-        int serverPort = 8000;
+        int serverPort = 5000;
         HttpServer server = null;
 		try {
 			server = HttpServer.create(new InetSocketAddress(serverPort), 0);
@@ -17,8 +21,13 @@ class Application {
 			
 			e.printStackTrace();
 		}
-        ProductService productService = new ProductService();
+		ProductController prodController = new ProductController();;
+        ProductService productService = new ProductService(prodController);
+        ProductUpdateByCategoryService productUpdateByCategoryService = new ProductUpdateByCategoryService(prodController);
+        ProductUpdateByPercentrangeService productUpdateByPercentrangeService = new ProductUpdateByPercentrangeService(prodController);
         server.createContext("/api/produto", productService::handle);
+        server.createContext("/api/atualizaproduto/porcategoria", productUpdateByCategoryService::handle);
+        server.createContext("/api/atualizaproduto/porfaixadeporcentagem", productUpdateByPercentrangeService::handle);
         System.out.println("Server running...at port: "+serverPort );
         server.setExecutor(null); 
         server.start();

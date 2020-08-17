@@ -13,16 +13,24 @@ public class ProductController {
 		return productDao.getAllProducts();
 	}
 	
-	public boolean updateProduct(int codigo, String descricao, int preco) {
-		return productDao.updateProduct(codigo, descricao, preco);
+	public boolean updateProduct(int codigo, int categoria, String descricao, int preco) {
+		return productDao.updateProduct(codigo,categoria, descricao, preco);
 	}
 	
 	public boolean deleteProduct(int code) {
 		return productDao.deleteProducts(code);
 	}
 	
-	public boolean createProduct(int code, String description, int price) {
-		return productDao.createNewProduct(code, description, price);
+	public boolean createProduct(int code, int categoria, String description, int price) {
+		return productDao.createNewProduct(code,categoria, description, price);
+	}
+
+	public boolean updateProductByCategory(int categoria, int aumentoPercentual) {
+		return productDao.updateProductByCategory(categoria, aumentoPercentual);
+	}
+
+	public boolean updateProductByPercentrange(int range1, int range2, int aumentoPercentual) {
+		return productDao.updateProductByPercentrange(range1,range2, aumentoPercentual);
 	}
 
 }

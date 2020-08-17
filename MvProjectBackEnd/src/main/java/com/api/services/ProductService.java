@@ -15,13 +15,22 @@ import com.api.entity.ProductEntity;
 public class ProductService extends Handler {
 	ProductController prodController;
 
-	public ProductService() {
+	public ProductService(ProductController prodController) {
 		super();
-		this.prodController = new ProductController();
+		this.prodController = prodController;
 	}
 
 	@Override
 	protected void execute(HttpExchange exchange) throws IOException {
+		exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "http://localhost:8080");
+
+	    if (exchange.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+	    	exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS, POST, PUT, DELETE");
+	    	exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type, Authorization");
+	    	exchange.sendResponseHeaders(204, -1);
+	            return;
+	        }
+	    
 		if ("GET".equals(exchange.getRequestMethod())) {
 			try {
 				List<ProductEntity> products = prodController.getAllProducts();
@@ -43,8 +52,9 @@ public class ProductService extends Handler {
 				InputStream is = exchange.getRequestBody();
 				String descricao = new String(is.readAllBytes());
 				int codigo = Integer.valueOf(this.getQueryParam(exchange, "codigo"));
+				int categoria= Integer.valueOf(this.getQueryParam(exchange, "categoria"));
 				int preco = Integer.valueOf(this.getQueryParam(exchange, "preco"));
-				boolean responseUpdate = prodController.updateProduct(codigo, descricao, preco);
+				boolean responseUpdate = prodController.updateProduct(codigo, categoria, descricao, preco);
 				exchange.sendResponseHeaders(200, respText.getBytes().length);
 				OutputStream output = exchange.getResponseBody();
 				output.write(String.valueOf(responseUpdate).getBytes());
@@ -80,8 +90,9 @@ public class ProductService extends Handler {
 				InputStream is = exchange.getRequestBody();
 				String descricao = new String(is.readAllBytes());
 				int codigo = Integer.valueOf(this.getQueryParam(exchange, "codigo"));
+				int categoria= Integer.valueOf(this.getQueryParam(exchange, "categoria"));
 				int preco = Integer.valueOf(this.getQueryParam(exchange, "preco"));
-				boolean responseCreate = prodController.createProduct(codigo, descricao, preco);
+				boolean responseCreate = prodController.createProduct(codigo,categoria, descricao, preco);
 				exchange.sendResponseHeaders(200, respText.getBytes().length);
 				OutputStream output = exchange.getResponseBody();
 				output.write(String.valueOf(responseCreate).getBytes());
