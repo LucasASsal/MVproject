@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import oracle.jdbc.OracleTypes;
+
+import com.api.entity.CategoryEntity;
 import com.api.entity.ProductEntity;
 import com.api.utils.GetJDBCCloudConnection;
 
@@ -193,6 +195,40 @@ public boolean updateProductByPercentrange(int range1, int range2, int aumentoPe
       
       
     return true;
+}
+
+
+
+public List<CategoryEntity> getAllCategories() {
+	ArrayList<CategoryEntity> listCategories= new ArrayList<>();
+	  try {
+		conn.setAutoCommit(false);
+		
+	    CallableStatement cs = conn.prepareCall("call admin.GET_ALL_CATEGORIES(?)"); 
+	    cs.registerOutParameter(1, OracleTypes.CURSOR);
+
+	    cs.execute();
+
+	    ResultSet rs = (ResultSet) cs.getObject(1);
+	    while (rs.next()) {
+
+	        int cdCategoria = rs.getInt("cd_categoria");
+	        String dsCategoria = rs.getString("ds_categoria");
+	        int nrPercentual = rs.getInt("nr_percentual");
+	        listCategories.add(new CategoryEntity(cdCategoria,dsCategoria, nrPercentual));
+	        
+	    }
+	    
+	    rs.close();
+	    cs.close();
+	    return listCategories;
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+	}
+	      
+	      
+		  return null;
 }
   
 }

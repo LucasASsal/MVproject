@@ -1,6 +1,7 @@
 package com.api.controllers;
 import java.util.List;
 
+import com.api.entity.CategoryEntity;
 import com.api.entity.ProductEntity;
 import com.api.dao.ProductDao;
 public class ProductController {
@@ -31,6 +32,10 @@ public class ProductController {
 
 	public boolean updateProductByPercentrange(int range1, int range2, int aumentoPercentual) {
 		return productDao.updateProductByPercentrange(range1,range2, aumentoPercentual);
+	}
+
+	public List<CategoryEntity> getAllCategories() {
+		return productDao.getAllCategories();
 	}
 
 }
