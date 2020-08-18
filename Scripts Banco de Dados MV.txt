@@ -1,0 +1,146 @@
+CREATE OR REPLACE EDITIONABLE PROCEDURE "ADMIN"."DELETE_PRODUCT" (p_codigo IN tabela_produtos.codigo%TYPE)
+IS
+BEGIN
+
+  DELETE from tabela_produtos where codigo = p_codigo;
+
+  COMMIT;
+
+END;
+/
+
+CREATE OR REPLACE EDITIONABLE PROCEDURE "ADMIN"."GET_ALL_CATEGORIES" (cursorParam OUT SYS_REFCURSOR)
+ IS
+  BEGIN
+   OPEN cursorParam FOR
+    SELECT * from tabela_categoria;
+END ;
+
+/
+
+CREATE OR REPLACE EDITIONABLE PROCEDURE "ADMIN"."GET_ALL_PRODUCTS" (cursorParam OUT SYS_REFCURSOR)
+ IS
+  BEGIN
+   OPEN cursorParam FOR
+    SELECT * from tabela_produtos ;
+END ;
+
+/
+
+CREATE OR REPLACE EDITIONABLE PROCEDURE "ADMIN"."GET_PRODUCT" (p_codigo IN tabela_produtos.codigo%TYPE, cursorParam OUT SYS_REFCURSOR)
+ IS
+  BEGIN
+   OPEN cursorParam FOR
+    SELECT * from tabela_produtos WHERE codigo = p_codigo;
+END ;
+
+/
+
+CREATE OR REPLACE EDITIONABLE PROCEDURE "ADMIN"."INSERT_PRODUCT" (
+
+  P_CODIGO   IN tabela_produtos.codigo%TYPE,
+  P_CATEGORIA IN tabela_produtos.categoria%TYPE,
+
+  P_DESCRICAO IN tabela_produtos.descricao%TYPE,
+
+  P_PRECO IN tabela_produtos.preco%TYPE)
+
+AS
+
+BEGIN
+
+    INSERT INTO TABELA_PRODUTOS(CODIGO, CATEGORIA, DESCRICAO, PRECO)
+
+    VALUES( 
+         P_CODIGO,
+      	P_CATEGORIA,
+
+       P_DESCRICAO,
+
+        P_PRECO);
+	COMMIT;
+
+END;
+/
+
+CREATE OR REPLACE EDITIONABLE PROCEDURE "ADMIN"."UPDATE_PRODUCT" (
+
+  P_CODIGO   IN tabela_produtos.codigo%TYPE,
+  
+  P_CATEGORIA IN tabela_produtos.categoria%TYPE,
+
+  P_DESCRICAO IN tabela_produtos.descricao%TYPE,
+
+  P_PRECO IN tabela_produtos.preco%TYPE)
+
+AS
+
+BEGIN
+
+    UPDATE TABELA_PRODUTOS
+
+    SET 
+  		CATEGORIA = P_CATEGORIA,
+
+        DESCRICAO = P_DESCRICAO,
+
+        PRECO = P_PRECO
+
+    WHERE (CODIGO = P_CODIGO);
+	COMMIT;
+
+END;
+/
+
+CREATE OR REPLACE EDITIONABLE PROCEDURE "ADMIN"."UPDATE_PRODUCT_PRICE_BY_CATEGORY" (
+
+  
+  P_CATEGORIA IN tabela_produtos.categoria%TYPE,
+
+  P_PRECO IN tabela_produtos.preco%TYPE)
+
+AS
+
+BEGIN
+
+    UPDATE TABELA_PRODUTOS
+
+    SET 
+  		CATEGORIA = P_CATEGORIA,
+
+        PRECO = PRECO+ PRECO * P_PRECO/100
+
+    WHERE (CATEGORIA = P_CATEGORIA);
+	COMMIT;
+
+END;
+/
+
+CREATE OR REPLACE EDITIONABLE PROCEDURE "ADMIN"."UPDATE_PRODUCT_PRICE_BY_PERCENTRANGE" (
+
+  
+  P_RANGE1 IN tabela_categoria.nr_percentual%TYPE,
+  
+  P_RANGE2 IN tabela_categoria.nr_percentual%TYPE,
+  
+  P_PRECO IN tabela_produtos.preco%TYPE)
+
+AS
+
+BEGIN
+
+  UPDATE
+  ( SELECT PRECO
+    FROM TABELA_PRODUTOS t1
+      JOIN TABELA_CATEGORIA t2
+        ON t1.CATEGORIA = t2.CD_CATEGORIA AND t2.NR_PERCENTUAL BETWEEN P_RANGE1 and P_RANGE2
+  )
+
+  SET PRECO = PRECO+ PRECO * P_PRECO/100;
+
+
+	COMMIT;
+
+END;
+/
+
