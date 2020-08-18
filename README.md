@@ -1,6 +1,6 @@
 # MVproject
-link para video no youtube:
-https://youtu.be/ndcXzYw6ArI
+link para o >>novo<< video no youtube:
+https://www.youtube.com/watch?v=RUROUFemU34
 
 ## Montagem do Back-end
 
